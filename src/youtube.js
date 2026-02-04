@@ -9,13 +9,29 @@ function isYouTubeUrl(input) {
   return YT_URL_RE.test(input);
 }
 
+function buildYtDlpArgs(baseArgs) {
+  const args = [...baseArgs];
+  const jsRuntime = (config.player.ytdlpJsRuntime || '').trim();
+  const cookiesPath = (config.player.ytdlpCookiesPath || '').trim();
+
+  if (jsRuntime) {
+    args.push('--js-runtimes', jsRuntime);
+  }
+
+  if (cookiesPath) {
+    args.push('--cookies', cookiesPath);
+  }
+
+  return args;
+}
+
 async function ytDlpJson(input) {
-  const output = await runCommand(config.player.ytdlpPath, [
+  const output = await runCommand(config.player.ytdlpPath, buildYtDlpArgs([
     '-j',
     '--no-playlist',
     '--skip-download',
     input,
-  ]);
+  ]));
   const line = output.split('\n').find((item) => item.trim().length > 0);
   if (!line) {
     throw new Error('yt-dlp returned no data');
@@ -34,13 +50,13 @@ async function resolveYouTube(input) {
 }
 
 async function getYouTubeAudioUrl(input) {
-  const output = await runCommand(config.player.ytdlpPath, [
+  const output = await runCommand(config.player.ytdlpPath, buildYtDlpArgs([
     '-f',
     'bestaudio',
     '-g',
     '--no-playlist',
     input,
-  ]);
+  ]));
   const line = output.split('\n').find((item) => item.trim().length > 0);
   if (!line) {
     throw new Error('yt-dlp returned no audio URL');

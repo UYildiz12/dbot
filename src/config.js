@@ -29,6 +29,8 @@ const config = {
   },
   player: {
     ytdlpPath: process.env.YTDLP_PATH || 'yt-dlp',
+    ytdlpJsRuntime: process.env.YTDLP_JS_RUNTIME || '',
+    ytdlpCookiesPath: process.env.YTDLP_COOKIES_PATH || '',
     ffmpegPath: process.env.FFMPEG_PATH || 'ffmpeg',
     autoDisconnectMs: toNumber(process.env.AUTO_DISCONNECT_MS, 60_000),
   },

@@ -13,6 +13,8 @@ function buildYtDlpArgs(baseArgs) {
   const args = [...baseArgs];
   const jsRuntime = (config.player.ytdlpJsRuntime || '').trim();
   const cookiesPath = (config.player.ytdlpCookiesPath || '').trim();
+  const remoteComponents = (config.player.ytdlpRemoteComponents || '').trim();
+  const extraArgs = (config.player.ytdlpExtraArgs || '').trim();
 
   if (jsRuntime) {
     args.push('--js-runtimes', jsRuntime);
@@ -20,6 +22,14 @@ function buildYtDlpArgs(baseArgs) {
 
   if (cookiesPath) {
     args.push('--cookies', cookiesPath);
+  }
+
+  if (remoteComponents) {
+    args.push('--remote-components', remoteComponents);
+  }
+
+  if (extraArgs) {
+    args.push(...extraArgs.split(' ').filter(Boolean));
   }
 
   return args;

@@ -31,6 +31,8 @@ const config = {
     ytdlpPath: process.env.YTDLP_PATH || 'yt-dlp',
     ytdlpJsRuntime: process.env.YTDLP_JS_RUNTIME || '',
     ytdlpCookiesPath: process.env.YTDLP_COOKIES_PATH || '',
+    ytdlpRemoteComponents: process.env.YTDLP_REMOTE_COMPONENTS || '',
+    ytdlpExtraArgs: process.env.YTDLP_EXTRA_ARGS || '',
     ffmpegPath: process.env.FFMPEG_PATH || 'ffmpeg',
     autoDisconnectMs: toNumber(process.env.AUTO_DISCONNECT_MS, 60_000),
   },
